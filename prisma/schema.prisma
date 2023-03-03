@@ -31,7 +31,7 @@ model Post {
   user_id           Int
   content           String
   create_time       DateTime          @default(now())
-  modify_time       DateTime          @updatedAt
+  modify_time       DateTime?        
 
   user              User              @relation(fields: [user_id], references: [id])
   post_reactions    PostReaction[]
@@ -45,7 +45,7 @@ model Comment {
   user_id           Int
   post_id           Int
   create_time       DateTime          @default(now())
-  modify_time       DateTime          @updatedAt
+  modify_time       DateTime?         
 
   user              User              @relation(fields: [user_id], references: [id])
   post              Post              @relation(fields: [post_id], references: [id])

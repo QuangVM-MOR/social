@@ -4,7 +4,7 @@ const router = express.Router()
 
 const routes = [
   {
-    path: "/auth",
+    path: "/login",
     route: 'login',
   }
 ]
