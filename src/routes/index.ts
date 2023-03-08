@@ -1,7 +1,8 @@
 import express from "express";
 import app from "../app";
-import { signIn,signUp } from "../controllers/user";
-// import { login } from "./auth";
+import { signIn, signUp } from "../controllers/user";
+import { validateBody } from "../middlewares/validate.middleware";
+import schema from "../validators";
 const router = express.Router()
 
 const routes = [
@@ -17,7 +18,7 @@ routes.forEach(route => {
 
 const configRoute = (app,upload) => {
   app.use('/api',router)
-  app.post('/sign-in', signIn)
-  app.post('/sign-up',upload.single('avatar'), signUp)
+  app.post('/sign-in',(req, res, next) => { console.log('req.body==>', req.body);next() } ,signIn)
+  app.post('/sign-up',upload.single('avatar'),validateBody(schema.userSchema), signUp)
 }
 export default configRoute

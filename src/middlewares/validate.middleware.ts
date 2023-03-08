@@ -1,0 +1,18 @@
+import schema from "../validators"
+
+export const validateBody = schema => (req, res, next) => {
+  const validatorResult = schema.validate(req.body)
+  if(validatorResult.error) {
+    return res.status(400).json(validatorResult.error)
+  }
+  next()
+}
+
+export const validateParam = (schema, key) => (req, res, next) => {
+  const validatorResult = schema.validate(req.params[key])
+
+  if(validatorResult.error) {
+    return res.status(400).json(validatorResult.error)
+  }
+  next()
+}

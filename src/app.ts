@@ -3,11 +3,15 @@ import path from "path"
 import configRoute from "./routes";
 import morgan from "morgan";
 import { Error } from "./type";
-const multer = require('multer');
+import multer from 'multer'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 
