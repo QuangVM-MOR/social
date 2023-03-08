@@ -1,9 +1,27 @@
 import prisma from '../data/db'
-import { hashPassword,createJWT } from '../utils'
+import { hashPassword,createJWT, comparePasswords } from '../utils'
 
 export const signIn =async  (req, res, next) => {
-  console.log('-->',await req.body)
-  return res.status(409).json('sadsad')
+  const user = await prisma.user.findUnique({
+    where: { account: req.body.account },
+  });
+
+  if (!user) {
+    res.status(401);
+    res.send("Invalid username or password");
+    return;
+  }
+    const isValid = await comparePasswords(req.body.password, user.password);
+    
+    if (!isValid) {
+      res.status(401);
+      res.send("Invalid username or password");
+      return;
+    }
+    
+    const token = createJWT(user);
+    res.json({ token });
+    
 }
 
 export const signUp = async (req, res, next) => {

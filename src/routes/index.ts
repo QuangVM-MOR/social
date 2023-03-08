@@ -18,7 +18,7 @@ routes.forEach(route => {
 
 const configRoute = (app,upload) => {
   app.use('/api',router)
-  app.post('/sign-in',(req, res, next) => { console.log('req.body==>', req.body);next() } ,signIn)
+  app.post('/sign-in', validateBody(schema.userSchema) ,signIn)
   app.post('/sign-up',upload.single('avatar'),validateBody(schema.userSchema), signUp)
 }
 export default configRoute

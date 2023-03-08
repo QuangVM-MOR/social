@@ -6,9 +6,16 @@ const schema = {
     name: Joi.string().max(255),
     email: Joi.string().email().max(255),
     avatar: Joi.binary(),
-    date_of_birth: Joi.string().pattern(/^(?:\d{4})-(?:\d{2})-(?:\d{2})T(?:\d{2}):(?:\d{2}):(?:\d{2}(?:\.\d*)?)(?:(?:-(?:\d{2}):(?:\d{2})|Z)?)$/),
+    date_of_birth: Joi.string().custom(isValidDate),
     description:Joi.string()
   })
 }
+
+function isValidDate(value, helpers) {
+  const regDate = new RegExp(String.raw`^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$`)
+  if (!regDate.test(value)) return helpers.message('error date')
+  return true
+}
+
 
 export default schema
