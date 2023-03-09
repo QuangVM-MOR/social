@@ -1,4 +1,4 @@
-import prisma from '../data/db'
+import prisma from '../database/db'
 import { hashPassword,createJWT, comparePasswords } from '../utils'
 
 export const signIn =async  (req, res, next) => {
@@ -41,8 +41,6 @@ export const signUp = async (req, res, next) => {
       }
     })
     if (checkEmail !== null) return res.status(409).json("Email has exist")
-    console.log('new Date(date_of_birth)',new Date(''))
-    console.log('new Date(date_of_birth)',new Date(date_of_birth))
     const user = await prisma.user.create({
       data: {
         account,
@@ -57,7 +55,7 @@ export const signUp = async (req, res, next) => {
     const token = createJWT(user)
     res.json({ token })
   } catch (e) {
-    console.log(e)
     res.json("sign up fail")
   }
 }
+

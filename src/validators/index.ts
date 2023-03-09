@@ -8,6 +8,12 @@ const schema = {
     avatar: Joi.binary(),
     date_of_birth: Joi.string().custom(isValidDate),
     description:Joi.string()
+  }),
+  postSchema: Joi.object().keys({
+    content: Joi.string().required(),
+  }),
+  numberSchema: Joi.object().keys({
+    param:Joi.number(),
   })
 }
 
