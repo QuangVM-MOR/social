@@ -1,4 +1,3 @@
-import { nextTick } from "process"
 import prisma from "../database/db"
 
 export const createNewPost = async (req, res,next) => {
@@ -53,10 +52,18 @@ export const editPost = async (req, res,next) => {
   }
 } 
 
-export const deletePost = (req, res) => {
-  
+export const deletePost =async (req, res) => {
+  try {
+    const deletePost = await prisma.post.delete({
+      where: {
+        id: +req.params.id
+      }
+    })
+    console.log('deletePost',deletePost)
+    return res.status(200).json("Delete success")
+
+  } catch (e) {
+    return res.status(400).json("Delete false")
+  }
 } 
 
-export const getUserPost = (req, res) => {
-  
-} 

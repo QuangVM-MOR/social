@@ -4,7 +4,7 @@ const schema = {
     account: Joi.string().max(255).required(),
     password: Joi.string().required().max(255),
     name: Joi.string().max(255),
-    email: Joi.string().email().max(255),
+    email: Joi.string().required().email().max(255),
     avatar: Joi.binary(),
     date_of_birth: Joi.string().custom(isValidDate),
     description:Joi.string()
@@ -14,6 +14,9 @@ const schema = {
   }),
   numberSchema: Joi.object().keys({
     param:Joi.number(),
+  }),
+  commentSchema: Joi.object().keys({
+    content: Joi.string().required(),
   })
 }
 
